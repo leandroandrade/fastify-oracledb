@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  oracle-db:
+    image: doctorkirk/oracle-19c:latest
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_SID=oracle
+      - ORACLE_PWD=oracle
+      - ORACLE_PDB=oracle
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - ORACLE_ALLOW_REMOTE=true
+      - ORACLE_USER=oracle
+      - ORACLE_PASSWORD=oracle
+    volumes:
+      - storage:/opt/oracle/oradata
+    networks:
+      - local-net
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+
+networks:
+  local-net:
+    driver: bridge
+
+volumes:
+  storage:

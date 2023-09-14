@@ -6,10 +6,11 @@ const Fastify = require('fastify')
 const oracledb = require('oracledb')
 
 const poolOptions = {
-  user: 'system', // Usuário do banco de dados Oracle -- admin, root, oracle
+  user: 'oracle', // Usuário do banco de dados Oracle -- admin, root, oracle
   password: 'oracle', // Senha do banco de dados Oracle
-  connectString: '127.0.0.1:1521/oracle' // Conexão do banco de dados Oracle
+  connectString: '127.0.0.1:1521/XEPDB1' // Conexão do banco de dados Oracle
 }
+
 test('creates pool from config', async (t) => {
   const fastify = Fastify()
 

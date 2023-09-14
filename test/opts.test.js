@@ -18,7 +18,7 @@ test('client must be instance of oracledb.pool', async (t) => {
   try {
     await fastify.ready()
   } catch (err) {
-    t.equal(err.message, 'fastify-oracle: supplied client must be an instance of oracledb.pool')
+    t.equal(err.message, 'fastify-oracledb: supplied client must be an instance of oracledb.pool')
     await fastify.close()
   }
 })
@@ -32,7 +32,7 @@ test('duplicate connection names should throw', async (t) => {
   try {
     await fastify.ready()
   } catch (err) {
-    t.equal(err.message, 'fastify-oracle: connection name "testdb" has already been registered')
+    t.equal(err.message, 'fastify-oracledb: connection name "testdb" has already been registered')
     await fastify.close()
   }
 })
@@ -47,7 +47,7 @@ test('duplicate plugin registration should throw', async (t) => {
   try {
     await fastify.ready()
   } catch (err) {
-    t.equal(err.message, 'fastify-oracle has already been registered')
+    t.equal(err.message, 'fastify-oracledb has already been registered')
     await fastify.close()
   }
 })
@@ -60,7 +60,7 @@ test('should throw if no pool option is provided', async (t) => {
   try {
     await fastify.ready()
   } catch (err) {
-    t.equal(err.message, 'fastify-oracle: must supply options.pool oracledb pool options')
+    t.equal(err.message, 'fastify-oracledb: must supply options.pool oracledb pool options')
     await fastify.close()
   }
 })
@@ -73,7 +73,7 @@ test('should throw if could not get pool alias', async (t) => {
   try {
     await fastify.ready()
   } catch (err) {
-    t.match(err.message, 'fastify-oracle: could not get pool alias')
+    t.match(err.message, 'fastify-oracledb: could not get pool alias')
     await fastify.close()
   }
 })
@@ -86,7 +86,7 @@ test('should throw if pool cannot be created', async (t) => {
   try {
     await fastify.ready()
   } catch (err) {
-    t.match(err.message, 'fastify-oracle: failed to create pool')
+    t.match(err.message, 'fastify-oracledb: failed to create pool')
     await fastify.close()
   }
 })

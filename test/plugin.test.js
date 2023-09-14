@@ -273,7 +273,7 @@ test('transact should fail if connection pool is invalid', async (t) => {
     })
   } catch (err) {
     // t.equal(err.message, 'ORA-24415: Missing or null username.')
-    t.equal(err.message, 'fastify-oracle: failed to create pool-NJS-101: no credentials specified')
+    t.equal(err.message, 'fastify-oracledb: failed to create pool-NJS-101: no credentials specified')
     await fastify.close()
     // t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   }
@@ -486,7 +486,7 @@ test('query should fail if connection pool is invalid', async (t) => {
     await fastify.ready()
     await fastify.oracle.query('SELECT * FROM DUAL')
   } catch (err) {
-    t.equal(err.message, 'fastify-oracle: failed to create pool-NJS-101: no credentials specified')
+    t.equal(err.message, 'fastify-oracledb: failed to create pool-NJS-101: no credentials specified')
     await fastify.close()
     // t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   }

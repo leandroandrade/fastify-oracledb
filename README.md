@@ -1,7 +1,7 @@
-# fastify-oracle
-[![Greenkeeper badge](https://badges.greenkeeper.io/cemremengu/fastify-oracle.svg)](https://greenkeeper.io/)
+# fastify-oracledb
+[![Greenkeeper badge](https://badges.greenkeeper.io/leandroandrade/fastify-oracledb.svg)](https://greenkeeper.io/)
 
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://travis-ci.org/cemremengu/fastify-oracle.svg?branch=master)](https://travis-ci.org/cemremengu/fastify-oracle) [![Coverage Status](https://coveralls.io/repos/github/cemremengu/fastify-oracle/badge.svg?branch=master)](https://coveralls.io/github/cemremengu/fastify-oracle?branch=master)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://travis-ci.org/leandroandrade/fastify-oracledb.svg?branch=master)](https://travis-ci.org/leandroandrade/fastify-oracledb) [![Coverage Status](https://coveralls.io/repos/github/leandroandrade/fastify-oracledb/badge.svg?branch=master)](https://coveralls.io/github/leandroandrade/fastify-oracledb?branch=master)
 
 This module provides access to an Oracle database connection pool via the
 [oracledb](https://npm.im/oracledb) module. It decorates the [Fastify](https://fastify.io)
@@ -12,7 +12,7 @@ on the connection pool.
 
 ## Install
 ```
-npm i fastify-oracle --save
+npm i fastify-oracledb --save
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ The plugin provides the basic functionality for creating a connection and execut
 ```js
 const fastify = require('fastify')()
 
-fastify.register(require('fastify-oracle'), {
+fastify.register(require('fastify-oracledb'), {
   pool: {
     user: 'foo',
     password: 'bar',
@@ -71,7 +71,7 @@ The `query` feature can be used for convenience to perform a query _without_ a t
 ```js
 const fastify = require('fastify')
 
-fastify.register(require('fastify-oracle'), {
+fastify.register(require('fastify-oracledb'), {
   pool: {
     user: 'travis',
     password: 'travis',
@@ -99,7 +99,7 @@ The `transact` feature can be used for convenience to perform multiple queries _
 ```js
 const fastify = require('fastify')
 
-fastify.register(require('fastify-oracle'), {
+fastify.register(require('fastify-oracledb'), {
   pool: {
     user: 'travis',
     password: 'travis',
@@ -141,7 +141,7 @@ fastify.oracle.transact((conn, commit) => {
 
 ## Options
 
-`fastify-oracle` requires an options object with at least one of the following
+`fastify-oracledb` requires an options object with at least one of the following
 properties:
 
 - `pool`: an `oracledb` [pool configuration object](https://github.com/oracle/node-oracledb/blob/33331413/doc/api.md#createpool)
@@ -162,7 +162,7 @@ Valid values are `['DATE', 'NUMBER', 'BUFFER', 'CLOB']`. Default `[]`.
 const fastify = require('fastify')()
 
 fastify
-  .register(require('fastify-oracle'), {
+  .register(require('fastify-oracledb'), {
     pool: {
       user: 'foo',
       password: 'bar',
@@ -170,7 +170,7 @@ fastify
     },
     name: 'ora1'
   })
-  .register(require('fastify-oracle'), {
+  .register(require('fastify-oracledb'), {
     pool: {
       user: 'foo',
       password: 'bar',

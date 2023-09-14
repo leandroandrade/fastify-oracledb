@@ -1,5 +1,5 @@
 {
-  "name": "fastify-oracle",
+  "name": "fastify-oracledb",
   "version": "5.0.0",
   "description": "A plugin for Fastify to provide Oracle DB connections",
   "main": "plugin.js",
@@ -13,18 +13,18 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/cemremengu/fastify-oracle.git"
+    "url": "git+ssh://git@github.com/leandroandrade/fastify-oracledb.git"
   },
   "keywords": [
     "fastify",
     "oracle"
   ],
-  "author": "Cemre Mengu <cemremengu@gmail.com>",
+  "author": "Cemre Mengu <leandroandrade@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cemremengu/fastify-oracle/issues"
+    "url": "https://github.com/leandroandrade/fastify-oracledb/issues"
   },
-  "homepage": "https://github.com/cemremengu/fastify-oracle#readme",
+  "homepage": "https://github.com/leandroandrade/fastify-oracledb#readme",
   "devDependencies": {
     "fastify": "^4.20.0",
     "pre-commit": "^1.2.2",

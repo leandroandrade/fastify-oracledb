@@ -229,8 +229,3 @@ If needed `pool` instance can be accessed via `fastify.oracle[.dbname].pool`
 
 [MIT License](http://jsumners.mit-license.org/)
 
-## Acknowledgements
-
-Thanks to 
-- [James Sumners](https://github.com/jsumners), who is the original author of this plugin, for his work and transferring his repository to me.
-- [Vincit](https://github.com/Vincit/travis-oracledb-xe) for his Travis Oracle work.

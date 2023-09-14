@@ -19,7 +19,7 @@
     "fastify",
     "oracle"
   ],
-  "author": "Cemre Mengu <leandroandrade@gmail.com>",
+  "author": "Leandro Andrade <leandroandrade@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/leandroandrade/fastify-oracledb/issues"

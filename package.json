@@ -8,9 +8,6 @@
     "coverage": "tap --cov test/*.test.js",
     "lint": "standard --fix | snazzy"
   },
-  "precommit": [
-    "test"
-  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/leandroandrade/fastify-oracledb.git"
@@ -27,7 +24,6 @@
   "homepage": "https://github.com/leandroandrade/fastify-oracledb#readme",
   "devDependencies": {
     "fastify": "^4.20.0",
-    "pre-commit": "^1.2.2",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0",
     "tap": "^16.3.7"

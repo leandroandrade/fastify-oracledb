@@ -21,15 +21,15 @@ test('creates pool from config', async (t) => {
     t.ok(fastify.oracle.pool)
     const conn = await fastify.oracle.getConnection()
     const result = await conn.execute('SELECT 1 AS FOO FROM DUAL', {}, { outFormat: fastify.oracle.db.OBJECT })
-    t.is(result.rows.length, 1)
-    t.is(result.rows[0].FOO, 1)
+    t.equal(result.rows.length, 1)
+    t.equal(result.rows[0].FOO, 1)
 
     // Note that we don't explicity close the connection here.
     // This tests the drainTime option since if a drainTime is not given,
     // then any open connections should be released with connection.close() before fastify.close() is called,
     // otherwise the underlying pool close will fail and the pool will remain open.
     await fastify.close()
-    t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+    t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   } catch (err) {
     t.error(err)
   }
@@ -46,14 +46,14 @@ test('creates named pool from config', async (t) => {
     t.ok(fastify.oracle.testdb.pool)
     const conn = await fastify.oracle.getConnection()
     const result = await conn.execute('SELECT 1 AS FOO FROM DUAL', {}, { outFormat: fastify.oracle.db.OBJECT })
-    t.is(result.rows.length, 1)
-    t.is(result.rows[0].FOO, 1)
+    t.equal(result.rows.length, 1)
+    t.equal(result.rows[0].FOO, 1)
 
     await conn.close()
     await fastify.close()
 
-    t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
-    t.is(fastify.oracle.testdb.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+    t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+    t.equal(fastify.oracle.testdb.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   } catch (err) {
     t.error(err)
   }
@@ -67,13 +67,13 @@ test('accepts singleton client', async (t) => {
     fastify.register(plugin, { client: pool })
     await fastify.ready()
 
-    t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_OPEN)
-    t.is(fastify.oracle.db, oracledb)
-    t.is(fastify.oracle.pool, pool)
+    t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_OPEN)
+    t.equal(fastify.oracle.db, oracledb)
+    t.equal(fastify.oracle.pool, pool)
 
     await fastify.close()
 
-    t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+    t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   } catch (err) {
     t.error(err)
   }
@@ -89,13 +89,13 @@ test('retrieves a cached pool', async (t) => {
 
     await fastify.ready()
 
-    t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_OPEN)
-    t.is(fastify.oracle.db, oracledb)
-    t.is(fastify.oracle.pool, pool)
+    t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_OPEN)
+    t.equal(fastify.oracle.db, oracledb)
+    t.equal(fastify.oracle.pool, pool)
 
     await fastify.close()
 
-    t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+    t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   } catch (err) {
     t.error(err)
   }
@@ -110,14 +110,14 @@ test('transact with async/await', async (t) => {
 
     const { rows } = await fastify.oracle.transact(async conn => {
       const res = await conn.execute('SELECT * FROM DUAL')
-      t.strictDeepEqual(res.rows, [{ DUMMY: 'X' }])
+      t.strictSame(res.rows, [{ DUMMY: 'X' }])
 
       return conn.execute('SELECT * FROM DUAL')
     })
 
-    t.strictDeepEqual(rows, [{ DUMMY: 'X' }])
+    t.strictSame(rows, [{ DUMMY: 'X' }])
     await fastify.close()
-    t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+    t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   } catch (err) {
     t.error(err)
   }
@@ -136,11 +136,11 @@ test('transact with promise', (t) => {
       return conn.execute('SELECT * FROM DUAL')
     }).then((res, err) => {
       t.error(err)
-      t.strictDeepEqual(res.rows, [{ DUMMY: 'X' }])
+      t.strictSame(res.rows, [{ DUMMY: 'X' }])
 
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -160,10 +160,10 @@ test('transact with callback', (t) => {
     },
     function (err, result) {
       t.error(err)
-      t.strictDeepEqual(result.rows, [{ DUMMY: 'X' }])
+      t.strictSame(result.rows, [{ DUMMY: 'X' }])
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -184,10 +184,10 @@ test('transact with commit callback', (t) => {
       })
     }, function (err, res) {
       t.error(err)
-      t.strictDeepEqual(res.rows, [{ DUMMY: 'X' }])
+      t.strictSame(res.rows, [{ DUMMY: 'X' }])
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -209,7 +209,7 @@ test('transact with promise (error)', (t) => {
 
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -228,11 +228,11 @@ test('transact with callback (error)', (t) => {
       return conn.execute('SELECT * FROM ??')
     },
     function (err, res) {
-      t.is(res, undefined)
+      t.equal(res, undefined)
       t.match(err.message, 'ORA-00911: invalid character')
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -252,11 +252,11 @@ test('transact with commit callback (error)', (t) => {
         commit(err, result)
       })
     }, function (err, res) {
-      t.is(res, undefined)
+      t.equal(res, undefined)
       t.match(err.message, 'ORA-00911: invalid character')
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -275,7 +275,7 @@ test('transact should fail if connection pool is invalid', async (t) => {
     // t.equal(err.message, 'ORA-24415: Missing or null username.')
     t.equal(err.message, 'fastify-oracledb: failed to create pool-NJS-101: no credentials specified')
     await fastify.close()
-    // t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+    // t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   }
 })
 
@@ -295,11 +295,11 @@ test('transact commit should error if connection drops', (t) => {
         })
       })
     }, function (err, res) {
-      t.is(res, undefined)
-      t.is(err.message, 'NJS-003: invalid connection')
+      t.equal(res, undefined)
+      t.equal(err.message, 'NJS-003: invalid connection')
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -314,9 +314,9 @@ test('query with async/await', async (t) => {
 
     const { rows } = await fastify.oracle.query('SELECT * FROM DUAL')
 
-    t.strictDeepEqual(rows, [{ DUMMY: 'X' }])
+    t.strictSame(rows, [{ DUMMY: 'X' }])
     await fastify.close()
-    t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+    t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   } catch (err) {
     t.error(err)
   }
@@ -331,9 +331,9 @@ test('query with async/await + values', async (t) => {
 
     const { rows } = await fastify.oracle.query('SELECT * FROM DUAL WHERE 1 = :v', [1])
 
-    t.strictDeepEqual(rows, [{ DUMMY: 'X' }])
+    t.strictSame(rows, [{ DUMMY: 'X' }])
     await fastify.close()
-    t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+    t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   } catch (err) {
     t.error(err)
   }
@@ -348,9 +348,9 @@ test('query with async/await + values + options', async (t) => {
 
     const { rows } = await fastify.oracle.query('SELECT * FROM DUAL WHERE 1 = :v', [1], { outFormat: oracledb.ARRAY })
 
-    t.strictDeepEqual(rows, [['X']])
+    t.strictSame(rows, [['X']])
     await fastify.close()
-    t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+    t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   } catch (err) {
     t.error(err)
   }
@@ -367,11 +367,11 @@ test('query with promise', (t) => {
 
     fastify.oracle.query('SELECT * FROM DUAL').then((res, err) => {
       t.error(err)
-      t.strictDeepEqual(res.rows, [{ DUMMY: 'X' }])
+      t.strictSame(res.rows, [{ DUMMY: 'X' }])
 
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -388,10 +388,10 @@ test('query with callback', (t) => {
 
     fastify.oracle.query('SELECT * FROM DUAL', function (err, res) {
       t.error(err)
-      t.strictDeepEqual(res.rows, [{ DUMMY: 'X' }])
+      t.strictSame(res.rows, [{ DUMMY: 'X' }])
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -408,10 +408,10 @@ test('query with callback + values', (t) => {
 
     fastify.oracle.query('SELECT * FROM DUAL WHERE 1 = :v', [1], function (err, res) {
       t.error(err)
-      t.strictDeepEqual(res.rows, [{ DUMMY: 'X' }])
+      t.strictSame(res.rows, [{ DUMMY: 'X' }])
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -428,10 +428,10 @@ test('query with callback + values + options', (t) => {
 
     fastify.oracle.query('SELECT * FROM DUAL WHERE 1 = :v', [1], { outFormat: oracledb.ARRAY }, function (err, res) {
       t.error(err)
-      t.strictDeepEqual(res.rows, [['X']])
+      t.strictSame(res.rows, [['X']])
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -451,7 +451,7 @@ test('query with promise (error)', (t) => {
 
       fastify.close(err => {
         t.error(err)
-        t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+        t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
       })
     })
   })
@@ -468,11 +468,11 @@ test('query with callback (error)', (t) => {
 
     fastify.oracle.query('SELECT * FROM ??',
       function (err, res) {
-        t.is(res, undefined)
+        t.equal(res, undefined)
         t.match(err.message, 'ORA-00911: invalid character')
         fastify.close(err => {
           t.error(err)
-          t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
+          t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
         })
       })
   })

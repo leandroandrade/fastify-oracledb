@@ -205,7 +205,7 @@ test('transact with promise (error)', (t) => {
     fastify.oracle.transact(conn => {
       return conn.execute('SELECT * FROM ??')
     }).catch((err) => {
-      console.log('DEBUG: ' + err.message);
+      console.log('DEBUG: [' + err.message + "]");
       t.equal(err.message, 'ORA-00911: invalid character')
 
       fastify.close(err => {

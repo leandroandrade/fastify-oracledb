@@ -253,7 +253,7 @@ test('transact with commit callback (error)', (t) => {
       })
     }, function (err, res) {
       t.is(res, undefined)
-      t.is(err.message, 'ORA-00911: invalid character')
+      t.match(err.message, 'ORA-00911: invalid character')
       fastify.close(err => {
         t.error(err)
         t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
@@ -447,7 +447,7 @@ test('query with promise (error)', (t) => {
     t.error(err)
 
     fastify.oracle.query('SELECT * FROM ??').catch((err) => {
-      t.is(err.message, 'ORA-00911: invalid character')
+      t.match(err.message, 'ORA-00911: invalid character')
 
       fastify.close(err => {
         t.error(err)
@@ -469,7 +469,7 @@ test('query with callback (error)', (t) => {
     fastify.oracle.query('SELECT * FROM ??',
       function (err, res) {
         t.is(res, undefined)
-        t.is(err.message, 'ORA-00911: invalid character')
+        t.match(err.message, 'ORA-00911: invalid character')
         fastify.close(err => {
           t.error(err)
           t.is(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)

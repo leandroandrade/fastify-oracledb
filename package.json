@@ -23,13 +23,13 @@
   },
   "homepage": "https://github.com/leandroandrade/fastify-oracledb#readme",
   "devDependencies": {
-    "fastify": "^4.20.0",
+    "fastify": "^4.23.2",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0",
-    "tap": "^16.3.7"
+    "tap": "^16.3.8"
   },
   "dependencies": {
     "fastify-plugin": "^4.5.1",
-    "oracledb": "^6.0.3"
+    "oracledb": "^6.1.0"
   }
 }

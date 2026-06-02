@@ -10,6 +10,11 @@ services:
       - ORACLE_PASSWORD=oracle
     volumes:
       - storage:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
 
 networks:
   default:

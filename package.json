@@ -1,10 +1,10 @@
 {
   "name": "fastify-oracledb",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "description": "A plugin for Fastify to provide Oracle DB connections",
   "main": "plugin.js",
   "scripts": {
-    "test": " tap test/*.test.js",
+    "test": "tap test/*.test.js",
     "coverage": "tap --cov test/*.test.js",
     "lint": "standard --fix | snazzy"
   },
@@ -22,14 +22,17 @@
     "url": "https://github.com/leandroandrade/fastify-oracledb/issues"
   },
   "homepage": "https://github.com/leandroandrade/fastify-oracledb#readme",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "devDependencies": {
-    "fastify": "^4.23.2",
+    "fastify": "^5.0.0",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0",
     "tap": "^16.3.8"
   },
   "dependencies": {
-    "fastify-plugin": "^4.5.1",
+    "fastify-plugin": "^5.0.0",
     "oracledb": "^6.1.0"
   }
 }

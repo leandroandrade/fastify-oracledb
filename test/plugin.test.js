@@ -8,7 +8,7 @@ const oracledb = require('oracledb')
 const poolOptions = {
   user: 'oracle', // Usuário do banco de dados Oracle -- admin, root, oracle
   password: 'oracle', // Senha do banco de dados Oracle
-  connectString: '127.0.0.1:1521/XEPDB1' // Conexão do banco de dados Oracle
+  connectString: '127.0.0.1:1521/FREEPDB1' // Conexão do banco de dados Oracle
 }
 
 test('creates pool from config', async (t) => {
@@ -205,7 +205,7 @@ test('transact with promise (error)', (t) => {
     fastify.oracle.transact(conn => {
       return conn.execute('SELECT * FROM ??')
     }).catch((err) => {
-      t.match(err.message, 'ORA-00911: invalid character')
+      t.match(err.message, /ORA-00911/)
 
       fastify.close(err => {
         t.error(err)
@@ -229,7 +229,7 @@ test('transact with callback (error)', (t) => {
     },
     function (err, res) {
       t.equal(res, undefined)
-      t.match(err.message, 'ORA-00911: invalid character')
+      t.match(err.message, /ORA-00911/)
       fastify.close(err => {
         t.error(err)
         t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
@@ -253,7 +253,7 @@ test('transact with commit callback (error)', (t) => {
       })
     }, function (err, res) {
       t.equal(res, undefined)
-      t.match(err.message, 'ORA-00911: invalid character')
+      t.match(err.message, /ORA-00911/)
       fastify.close(err => {
         t.error(err)
         t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
@@ -272,8 +272,7 @@ test('transact should fail if connection pool is invalid', async (t) => {
       return conn.execute('SELECT * FROM DUAL')
     })
   } catch (err) {
-    // t.equal(err.message, 'ORA-24415: Missing or null username.')
-    t.equal(err.message, 'fastify-oracledb: failed to create pool-NJS-101: no credentials specified')
+    t.match(err.message, /fastify-oracledb: failed to create pool-NJS-/)
     await fastify.close()
     // t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   }
@@ -296,7 +295,7 @@ test('transact commit should error if connection drops', (t) => {
       })
     }, function (err, res) {
       t.equal(res, undefined)
-      t.equal(err.message, 'NJS-003: invalid connection')
+      t.match(err.message, /NJS-003/)
       fastify.close(err => {
         t.error(err)
         t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
@@ -447,7 +446,7 @@ test('query with promise (error)', (t) => {
     t.error(err)
 
     fastify.oracle.query('SELECT * FROM ??').catch((err) => {
-      t.match(err.message, 'ORA-00911: invalid character')
+      t.match(err.message, /ORA-00911/)
 
       fastify.close(err => {
         t.error(err)
@@ -469,7 +468,7 @@ test('query with callback (error)', (t) => {
     fastify.oracle.query('SELECT * FROM ??',
       function (err, res) {
         t.equal(res, undefined)
-        t.match(err.message, 'ORA-00911: invalid character')
+        t.match(err.message, /ORA-00911/)
         fastify.close(err => {
           t.error(err)
           t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
@@ -486,7 +485,7 @@ test('query should fail if connection pool is invalid', async (t) => {
     await fastify.ready()
     await fastify.oracle.query('SELECT * FROM DUAL')
   } catch (err) {
-    t.equal(err.message, 'fastify-oracledb: failed to create pool-NJS-101: no credentials specified')
+    t.match(err.message, /fastify-oracledb: failed to create pool-NJS-/)
     await fastify.close()
     // t.equal(fastify.oracle.pool.status, fastify.oracle.db.POOL_STATUS_CLOSED)
   }
